@@ -12,6 +12,25 @@ PANEL = 50
 screen = pygame.display.set_mode((WIDTH, HEIGHT + PANEL))
 pygame.display.set_caption("8 POOL BY Hisham")
 
+clock = pygame.time.Clock()
+FPS = 120
+space  = pymunk.Space()
+space.gravity = (0, 5000)
+static_body = space.static_body
+
+draw_options = pymunk.pygame_util.DrawOptions(screen)
+
+def create_ball(radius, pos):
+    body = pymunk.Body()
+    body.position = pos
+    shape = pymunk.Circle(body, radius)
+    shape.mass = 5
+    space.add(body, shape)
+
+    return shape
+
+new_ball = create_ball(25, (300, 300)) # x and y
+
 run = True
 
 while run:
@@ -19,5 +38,9 @@ while run:
         if event.type == pygame.QUIT:
             run = False
 
+    clock.tick(FPS)
+    space.step(1 / FPS)
+    space.debug_draw(draw_options)
+    pygame.display.update()
 
 pygame.quit()
