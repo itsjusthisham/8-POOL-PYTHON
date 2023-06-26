@@ -14,6 +14,9 @@ pygame.display.set_caption("8 POOL BY Hisham")
 
 clock = pygame.time.Clock()
 FPS = 120
+
+BG = (50, 50, 50)
+
 space  = pymunk.Space()
 space.gravity = (0, 5000)
 static_body = space.static_body
@@ -30,11 +33,16 @@ def create_ball(radius, pos):
     return shape
 
 new_ball = create_ball(25, (300, 300)) # x and y
+new1_ball = create_ball(25, (600, 300)) # x and y
 
 run = True
 
 while run:
+    screen.fill(BG)
     for event in pygame.event.get():
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            new_ball.body.apply_impulse_at_local_point((-2200,0), (0,110))
+
         if event.type == pygame.QUIT:
             run = False
 
